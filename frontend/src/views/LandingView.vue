@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import CardInfo from '../components/CardInfo.vue';
-import {ref , Ref} from 'vue';
+import {ref} from 'vue';
+import type { Ref } from 'vue'
 
 function isMobile() {
   const regex = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
