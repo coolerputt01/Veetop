@@ -1,40 +1,87 @@
 <script setup lang="ts">
 import CardInfo from '../components/CardInfo.vue';
-import {ref} from 'vue';
-import type { Ref } from 'vue'
+import menuIcon from '@/assets/menu.svg'
 
-function isMobile() {
-  const regex = /Mobi|Android|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i;
-  return regex.test(navigator.userAgent);
+import {ref} from 'vue';
+import type { Ref } from 'vue';
+
+function isMobile(): boolean {;
+  return ('ontouchstart' in window ||
+    (window.matchMedia && window.matchMedia('(pointer: coarse)').matches)
+  );
 }
 const isMobileRef : Ref<boolean> = ref(isMobile());
 console.log(isMobileRef.value);
 </script>
 
 <template>
-  <main class="container-fluid bg-white">
-    <section class="container-fluid my-4 d-flex justify-content-around gap-5 h-100">
+  <main class="container" style="margin: 0;padding: 0;scroll-behavior: smooth;overflow:hidden;">
+    <header class="d-flex justify-content-end" style="background-color: #000;">
+      <nav class="navbar navbar-expand-lg">
+        <div class="container-fluid">
+           <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <img :src="menuIcon" alt="Menu SVG Icon" style="width: 1.5em;height: 1.5em;right:0 !important;">
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+              <li class="nav-item">
+                <a class="nav-link p-2" href="#" style="color:#fff">Sign Up</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link p-2 text-center" href="#" style="color:#000;background-color: #fff;border-radius: 50px;">Login</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </header>
+    <section class="d-flex justify-content-around" style="height: 45vh !important;padding-bottom:12em;background-color: #000;clip-path: polygon(
+    0 0,         /* top-left */
+    100% 0,      /* top- right */
+    100% 80%,    /* partway down right side */
+    0% 100%,    /* angled bottom corner */
+    0 100%       /* bottom-left */
+  );">
       <div class="my-5">
         <span class="text-left">
-          <h1 class="text-dark h1 display-1" style="font-weight: 600;"><span style="color: #4af753">Vee</span>Top</h1>
+          <h1 class="h1 display-1" style="font-weight: 600;color:grey;"><span style="color: #fff">Vee</span>Top</h1>
         </span>
         <h3 style="color: grey;font-weight: 400;font-size: medium;" class="text-left" >Internetworking made available for all...</h3>
-        <button style="background-color: #4af753;cursor: pointer; border-radius: 50px;color:white;width:30vw;border:none;outline: none;" class="my-4 p-2"> Get Started</button>
+        <button style="background-color: #fff;cursor: pointer; border-radius: 50px;color:white;width:30vw;border:none;outline: none;color:#000;" class="my-4 p-2"> Get Started</button>
       </div>
       <span>
         <img v-lazy="'https://i.ibb.co/C5gVkBLy/Veetop-Hand.png'" alt="Veetop Phone illustration" class="w-100 mx-3" v-show="!isMobileRef">
       </span>
     </section>
-    <section class="d-flex justify-content-center">
+    <h2 class="text-center m-3" style="font-size: 2em;font-weight: 700;">Why choose us?</h2>
+    <section class="card-group mb-5 d-flex flex-column flex-md-row justify-content-center align-items-stretch gap-3">
       <CardInfo
         card-title="Instant Airtime & Data"
         card-desc="Top up airtime or data for any network in seconds—no queues, no stress, 24/7."/>
       <CardInfo
-        card-title="Instant Airtime & Data"
-        card-desc="Top up airtime or data for any network in seconds—no queues, no stress, 24/7."/>
+        card-title="Affordable Pricing"
+        card-desc="Enjoy unbeatable discounts on data and airtime. Save money on every transaction, every time."/>
       <CardInfo
-        card-title="Instant Airtime & Data"
-        card-desc="Top up airtime or data for any network in seconds—no queues, no stress, 24/7."/>
+        card-title="Easy & Secure"
+        card-desc="Our platform is built for speed, security, and ease. Anyone can use it—effortlessly."/>
     </section>
+    <footer class="p-4" style="background-color: #000;">
+      <div class="d-flex justify-content-around">
+        <h1 class="h1 display-1" style="font-weight: 600;font-size: 1.6em;color:grey;"><span style="color: #fff">Vee</span>Top</h1>
+        <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;width:100%;">
+          <h2 class="card-title m-2 text-center" style="width:100%;font-size: 1.3em;font-weight: 700;">Tasks</h2>
+          <ul class="d-flex justify-content-center row">
+            <li style="list-style:none;text-decoration: underline; margin: 2%; text-align: center; color:grey;"> Buy Data & Airtime</li>
+            <li style="list-style:none;text-decoration: underline; margin: 2%; text-align: center; color:grey;">Share Data and Airtime</li>
+            <li style="list-style:none;text-decoration: underline; margin: 2%; text-align: center; color:grey;">Pay for bills</li>
+          </ul>
+        </div>
+        <ul class="d-flex justify-content-center align-items-center row" style="height: 100%;width:100%;">
+            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;" href="#"> Sign In</a>
+            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;" href="#">Sign Up</a>
+          </ul>
+      </div>
+      <p style="color:grey" class="text-center m-3">2025 &copy all rights reserved.</p>
+    </footer>
   </main>
 </template>

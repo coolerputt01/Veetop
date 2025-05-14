@@ -8,12 +8,12 @@ const { cardTitle , cardDesc} = defineProps<{
 </script>
 
 <template>
-  <div class="w-25 row p-3 m-2" style="background-color: #4af753;border-radius: 28px;">
+  <div class="card row p-3 m-2" style="width: 18rem;flex:0 0 auto;background-color: rgba(0, 0, 0, 0.9);border-radius: 28px;border: 2px solid grey">
     <div>
-      <h3 class="text-white" style="font-weight: 600;"> {{ cardTitle }}</h3>
+      <h3 class="text-white" style="font-weight: 700;"> {{ cardTitle }}</h3>
     </div>
     <div>
-      <p class="text-white" style="color: grey;"> {{ cardDesc }}</p>
+      <p class="text-white" style="color: grey;font-weight: 600;"> {{ cardDesc }}</p>
     </div>
   </div>
 </template>
