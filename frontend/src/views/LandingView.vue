@@ -21,7 +21,7 @@ const isHovered : Ref<boolean> = ref(false);
       <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
            <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <img :src="menuIcon" alt="Menu SVG Icon" style="width: 1.5em;height: 1.5em;right:0 !important;">
+            <img v-lazy="menuIcon" alt="Menu SVG Icon" style="width: 1.5em;height: 1.5em;right:0 !important;">
           </button>
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
