@@ -4,6 +4,7 @@ import menuIcon from '@/assets/menu.svg'
 
 import {ref} from 'vue';
 import type { Ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 function isMobile(): boolean {;
   return ('ontouchstart' in window ||
@@ -13,6 +14,8 @@ function isMobile(): boolean {;
 const isMobileRef : Ref<boolean> = ref(isMobile());
 
 const isHovered : Ref<boolean> = ref(false);
+
+const router = useRouter();
 </script>
 
 <template>
@@ -26,10 +29,10 @@ const isHovered : Ref<boolean> = ref(false);
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
               <li class="nav-item">
-                <a class="nav-link p-2" href="#" style="color:#fff">Sign Up</a>
+                <a class="nav-link p-2" href="#" style="color:#fff" @click.prevent="router.push('/signup')">Sign Up</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link p-2 text-center" href="#" style="color:#000;background-color: #fff;border-radius: 50px;transition: all 0.5s;" :class="{'hovered':isHovered}" @mouseover="isHovered=true" @mouseleave="isHovered=false">Login</a>
+                <a class="nav-link p-2 text-center" href="#" style="color:#000;background-color: #fff;border-radius: 50px;transition: all 0.5s;" :class="{'hovered':isHovered}" @mouseover="isHovered=true" @mouseleave="isHovered=false" @click.prevent="router.push('/login')">Login</a>
               </li>
             </ul>
           </div>
@@ -48,7 +51,7 @@ const isHovered : Ref<boolean> = ref(false);
           <h1 class="h1 display-1" style="font-weight: 600;color:grey;"><span style="color: #fff">Vee</span>Top</h1>
         </span>
         <h3 style="color: grey;font-weight: 400;font-size: medium;" class="text-left" >Internetworking made available for all...</h3>
-        <button style="background-color: #fff;cursor: pointer; border-radius: 50px;color:white;width:30vw;border:none;outline: none;color:#000;transition:all 0.3s;" class="my-4 p-2" :class="{'hovered':isHovered}" @mouseover="isHovered= true" @mouseleave="isHovered=false"> Get Started</button>
+        <button style="background-color: #fff;cursor: pointer; border-radius: 50px;color:white;width:30vw;border:none;outline: none;color:#000;transition:all 0.3s;" class="my-4 p-2" :class="{'hovered':isHovered}" @mouseover="isHovered= true" @mouseleave="isHovered=false" @click.prevent="router.push('/signup')"> Get Started</button>
       </div>
       <span>
         <img v-lazy="'https://i.ibb.co/C5gVkBLy/Veetop-Hand.png'" alt="Veetop Phone illustration" class="w-100 mx-3" v-show="!isMobileRef">
@@ -78,8 +81,8 @@ const isHovered : Ref<boolean> = ref(false);
           </ul>
         </div>
         <ul class="d-flex justify-content-center align-items-center row" style="height: 100%;width:100%;">
-            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;cursor: pointer;z-index: 10;" href="#"> Sign In</a>
-            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;cursor: pointer;z-index: 10;" href="#">Sign Up</a>
+            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;cursor: pointer;z-index: 10;" href="# "@click.prevent="router.push('/login')"> Login </a>
+            <a style="list-style: none; text-align: center; color:lightgrey; text-decoration: none;cursor: pointer;z-index: 10;" href="#" @click.prevent="router.push('/signup')">Sign Up</a>
           </ul>
       </div>
       <p style="color:grey" class="text-center m-3">2025 &copy all rights reserved.</p>

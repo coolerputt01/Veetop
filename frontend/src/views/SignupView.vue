@@ -5,6 +5,7 @@ import { useRouter } from 'vue-router';
 
 import { auth, firestore } from '@/scripts/firebase.ts';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { sendEmailVerification } from 'firebase/auth';
 import { doc , setDoc } from 'firebase/firestore';
 
 const email : Ref<string> = ref('');
@@ -83,7 +84,7 @@ async function signUp(email: string, password:string,confirm_password:string,pho
         }
         const userCredential = await createUserWithEmailAndPassword(auth,email,password);
         const user = userCredential.user;
-
+        await sendEmailVerification(user);
         await setDoc(doc(firestore,"users",user.uid),{
             email: user.email,
             phone_number: phone_number,
@@ -92,7 +93,7 @@ async function signUp(email: string, password:string,confirm_password:string,pho
         startTimer();
         encounteredError.value = false;
         showToastFunc("User Successfully Signed Up.")
-        //router.push('/verify')
+        router.push('/verify')
     }catch(error: unknown){
         if(error instanceof Error){
             console.log("An Error Occured: ",error.message);
