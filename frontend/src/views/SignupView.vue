@@ -23,6 +23,10 @@ const show_seconds_display = computed(() => {
 
 let timer: number | null = null;
 
+function redirect() {
+    router.push('/login')
+}
+
 function startTimer() {
   base_time.value = Date.now();
   if (timer !== null) clearInterval(timer);
@@ -126,7 +130,7 @@ async function signUp(email: string, password:string,confirm_password:string,pho
                 <input placeholder="Enter your phone number" type="text" class="p-3" v-model="phone_number" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
                 <input placeholder="Enter your password" type="password" class="p-3" v-model="password" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
                 <input placeholder="Confirm password" type="password" class="p-3" v-model="confirm_password" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
-                <p class="text-dark">Already have an account? <a href="#">login here</a></p>
+                <p class="text-dark">Already have an account? <a href="#" @click.prevent="redirect">login here</a></p>
                 <button @click.prevent="signUp(email,password,confirm_password,phone_number)" class="p-2 justify-content-center"style="color:#fff;cursor: pointer;font-size:1.05em;transition:all 0.3s;background-color: #000;border-radius: 50px;width: 50% ;text-align: center;">
                     <span v-if="!isLoading">Sign Up</span>
                     <div v-else class="spinner-border text-light" role="status">
