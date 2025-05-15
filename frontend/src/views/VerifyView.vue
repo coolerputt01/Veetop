@@ -1,9 +1,10 @@
 <script lang="ts" setup>
-import { ref,onUnmounted ,computed} from 'vue';
+import { ref,onUnmounted ,computed,onBeforeMount } from 'vue';
 import type { Ref } from 'vue';
-import { sendEmailVerification,getAuth } from 'firebase/auth';
+import { sendEmailVerification,onAuthStateChanged ,getAuth } from 'firebase/auth';
+import { useRouter } from 'vue-router';
+import { auth } from '@/scripts/firebase.ts';
 
-const auth = getAuth();
 const user = auth.currentUser;
 
 const showToast : Ref<boolean> = ref(false);
@@ -17,7 +18,25 @@ const show_seconds_display = computed(() => {
     return Math.floor((timestamp.value - base_time.value) / 1000);
 });
 
+const router = useRouter();
+
 let timer: number | null = null;
+
+onBeforeMount(() => {
+    onAuthStateChanged((auth) , async (user) => {
+        if(user) {
+            await user.reload();
+            if(user.emailVerified) {
+                router.push('/dashboard');
+            }else {
+                encounteredError.value = true;
+                startTimer();
+                showToastFunc("Please verify your e-mail");
+            }
+        }
+    });
+});
+
 function startTimer() {
     base_time.value = Date.now();
     if (timer !== null) clearInterval(timer);
