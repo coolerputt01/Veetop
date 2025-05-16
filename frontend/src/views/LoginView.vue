@@ -14,6 +14,9 @@ function redirect() {
     router.push('/signup')
 }
 
+const passw : Ref<HTMLElement | null> = ref(null);
+const isClicked : Ref<boolean> = ref(false);
+
 const isFocused : Ref<boolean> = ref(false);
 const timestamp = ref(Date.now());
 const base_time = ref(0);
@@ -98,7 +101,10 @@ async function login(email:string,password:string) {
             <form style="width:100vw;height:50vh;display: flex;justify-content: center;flex-direction: column;margin-top: 10em;">
                 <h1 style="font-weight: 550;">Login</h1>
                 <input placeholder="Enter your email" @focusin="isFocused = true" @focusout="isFocused = false" :class="{'focus':isFocused}" type="text" class="p-3" v-model="email" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
-                <input placeholder="Enter your password" type="password" class="p-3" v-model="password" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
+                <div class="input-group" style="position: relative;">
+                  <input ref="passw" placeholder="Enter your password" :type="isClicked ? 'text' : 'password'" class="p-3" v-model="password" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
+                  <img v-lazy="'/src/assets/eye.svg'" alt="Veetop eye Login icon" style="width: 1.3em;position: absolute;right:35%;top:20%;cursor: pointer;opacity: 0.7;" @click="isClicked = !isClicked;" >
+                </div>
                 <p class="text-dark">Don't have an account? <a href="#" @click.prevent="redirect">signup here</a></p>
                 <button @click.prevent="login(email,password)" class="p-2 justify-content-center" style="color:#fff;cursor: pointer;font-size:1.05em;background-color: #000;border-radius: 50px;width: 50% ;text-align: center;">
                     <span v-if="!isLoading"> Login </span>
