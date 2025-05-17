@@ -6,6 +6,8 @@ import { useRouter } from 'vue-router';
 import { auth } from '@/scripts/firebase.ts';
 import { signInWithEmailAndPassword  } from 'firebase/auth';
 
+import { getUser ,buyData,buyAirtime,getAllDataTransaction,queryDataTransaction,queryAirtimeTransaction} from "@/scripts/vitual-topup.ts";
+
 const email : Ref<string> = ref('');
 const password : Ref<string> = ref('');
 
@@ -27,6 +29,14 @@ const show_seconds_display = computed(() => {
 });
 
 let timer: number | null = null;
+
+getUser();
+buyData();
+buyAirtime();
+getAllDataTransaction();
+queryDataTransaction(2);
+queryAirtimeTransaction(2);
+
 
 function startTimer() {
   base_time.value = Date.now();
