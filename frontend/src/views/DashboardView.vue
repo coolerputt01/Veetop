@@ -22,8 +22,8 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                         <img style="width:2em;height: 2em;object-fit: cover;border-radius: 50%;" v-lazy="'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTsw40RqD54BYg7g04mBOm0f2k24h2hhn8-gg&s'" alt="VeeTop User">
                     </div>
                     <div style="line-height: 5px;">
-                        <h1 style="font-size: 1.3em;font-weight: 700;">Welcome</h1>
-                        <p style="font-size: 1em;font-weight:5600;">coolerputt</p>
+                        <h1 style="font-size: 1.3em;font-weight: 700;color:#000">Welcome</h1>
+                        <p style="font-size: 1em;font-weight:600;color:#000">coolerputt</p>
                     </div>
                 </span>
                 <span>
@@ -35,7 +35,7 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                     <span style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
                         <h1 style="color: lightgrey;font-size: 1.3em;font-weight: 600;height: 100%;">Wallet <img :src="imgSrc" alt="VeeTop Wallet View Toggle" style="width:1.1em;height: 1.1em;object-fit: cover;cursor: pointer;" @click="walletShow = !walletShow"></h1>
                         <span>
-                            <p style="color: #fff;font-size: 1em;font-weight: 600;height: 100%; cursor: pointer;">History <img v-lazy="'/src/assets/right.svg'" alt="VeeTop History Icon" style="width: 1.1em;height: 1.1em;object-fit: cover;"></p>
+                            <p style="color: #fff;font-size: 1em;font-weight: 600;height: 100%; cursor: pointer;">Logs <img v-lazy="'/src/assets/right.svg'" alt="VeeTop History Icon" style="width: 1.1em;height: 1.1em;object-fit: cover;"></p>
                         </span>
                     </span>
                     <span style="display: flex;justify-content: space-between;align-items: center;width: 100%;">
@@ -49,15 +49,33 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                     </span>
                 </div>
             </section>
-            <section>
+            <section style="margin-top: 3em;">
+                <div style="display: flex;justify-content: center;align-items: center;flex-direction: row;gap:5%;">
+                    <div style="width:30vw;height: 30vw;cursor:pointer;background-color: lightgrey;border-radius:14% ;display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 24px;">
+                        <img v-lazy="'/src/assets/airtime.svg'" alt="VeTop Airtime Top-up Icon" style="width: 3.7em;height: 3.7em;object-fit: cover;background-color: grey;border-radius: 50%;padding:12px;">
+                        <p style="padding: 8px;color: #000;font-weight: 700;text-align: center;">Airtime</p>
+                    </div>
+                    <div style="width:30vw;height: 30vw;cursor:pointer;background-color: lightgrey;border-radius:14% ;display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 24px;">
+                        <img v-lazy="'/src/assets/data.svg'" alt="VeTop Airtime Top-up Icon" style="width: 3.7em;height: 3.7em;object-fit: cover;background-color: grey;border-radius: 50%;padding:12px;">
+                        <p style="padding: 8px;color: #000;font-weight: 700;text-align: center;">Data</p>
+                    </div>
+                    <div style="width:30vw;height: 30vw;cursor:pointer;background-color: lightgrey;border-radius:14% ;display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 24px;">
+                        <img v-lazy="'/src/assets/gift.svg'" alt="VeTop Airtime Top-up Icon" style="width: 3.7em;height: 3.7em;object-fit: cover;background-color: grey;border-radius: 50%;padding:12px;">
+                        <p style="padding: 8px;color: #000;font-weight: 700;text-align: center;">Gift</p>
+                    </div>
+                </div>
+            </section>
+            <section style="width: 100vw;">
                 <div>
                     <span class="transaction-table" style="display: flex;border-bottom:1px solid #000;padding: 1.3em;justify-content: space-between;align-items: center;width: 100%;margin-top: 2em;">
                         <h2 style="font-size: 1.4em;">Recent transactions</h2>
-                        <p style="font-size: 1.1em;cursor: pointer;transition: all 0.5s;"> view all <img v-lazy="'/src/assets/black-right.svg'" alt="VeeTop History Icon" style="width: 1.1em;height: 1.1em;object-fit: cover;mix-blend-mode: darken;"></p>
+                        <a style="font-size: 1.1em;cursor: pointer;transition: all 0.5s;text-decoration: none;color: #00c3ff;" href="#"> view all <img v-lazy="'/src/assets/black-right.svg'" alt="VeeTop History Icon" style="width: 1.1em;height: 1.1em;object-fit: cover;mix-blend-mode: darken;"></a>
                     </span>
-                    <ul>
-                        <TransactionCard />
-                    </ul>
+                    <div style="width: 100%; max-height: 50vh; overflow-y: auto; scroll-behavior: smooth;">
+                        <div style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+                            <TransactionCard v-for="i in 15" :key="i" />
+                        </div>
+                    </div>
                 </div>
             </section>
         </section>
