@@ -6,7 +6,6 @@ const dateNow = ref(new Date().toLocaleString('en-GB', {
     dateStyle: 'medium',
     timeStyle: 'short'
 }));
-console.log(dateNow.value)
 </script>
 
 <template>
