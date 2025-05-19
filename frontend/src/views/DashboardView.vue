@@ -77,7 +77,7 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                     </span>
                     <div class="table" style="width: 100%; max-height: 50vh;;overflow-y: auto; scroll-behavior: smooth;">
                         <div style="width: 100%; display: flex; flex-direction: column; align-items: center;overflow-y:scroll">
-                            <TransactionCard v-for="i in 5" :key="i" />
+                            <TransactionCard v-for="i in 5" :key="i" date-time="18 May 2025, 16:04" amount="8000" vtu-plan="Mobile Data" :succesful="false" />
                         </div>
                     </div>
                 </div>
