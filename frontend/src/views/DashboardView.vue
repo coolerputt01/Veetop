@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref ,computed} from 'vue';
 import type { Ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 import NavBar from '@/components/NavBar.vue';
 
@@ -10,6 +11,8 @@ import wallet from '@/assets/wallet-eye.svg';
 import TransactionCard from '@/components/TransactionCard.vue';
 
 const walletShow : Ref<boolean> = ref(true);
+
+const router = useRouter();
 
 const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
 
@@ -54,7 +57,7 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                 </section>
                 <section style="margin-top: 3em;" class="topup-sec">
                     <div style="display: flex;justify-content: center;align-items: center;flex-direction: row;gap:5%;">
-                        <div class="topup-card" style="width:30vw;height: 30vw;transition: all 0.5s; cursor:pointer;border-radius:14% ;display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 24px;">
+                        <div class="topup-card" style="width:30vw;height: 30vw;transition: all 0.5s; cursor:pointer;border-radius:14% ;display: flex;justify-content: center;align-items: center;flex-direction: column;padding: 24px;" @click.stop="router.push('/airtime')">
                             <img v-lazy="'/src/assets/airtime.svg'" alt="VeTop Airtime Top-up Icon" style="width: 3.7em;height: 3.7em;object-fit: cover;background-color: lightgrey;mix-blend-mode: difference; border-radius: 50%;padding:12px;">
                             <p style="padding: 2px;color: #000;font-weight: 700;text-align: center;">Airtime</p>
                         </div>
@@ -75,7 +78,7 @@ const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
                         <h2 style="font-size: 1.4em;">Recent transactions</h2>
                         <a style="font-size: 1.1em;cursor: pointer;transition: all 0.5s;text-decoration: none;color: #00c3ff;" href="#"> view all <img v-lazy="'/src/assets/black-right.svg'" alt="VeeTop History Icon" style="width: 1.1em;height: 1.1em;object-fit: cover;mix-blend-mode: darken;"></a>
                     </span>
-                    <div class="table" style="width: 100%; max-height: 50vh;;overflow-y: auto; scroll-behavior: smooth;">
+                    <div class="table" style="width: 100%; max-height: 50vh;;overflow-y: auto; scroll-behavior: smooth;margin-bottom: 2.8em;">
                         <div style="width: 100%; display: flex; flex-direction: column; align-items: center;overflow-y:scroll">
                             <TransactionCard v-for="i in 5" :key="i" date-time="18 May 2025, 16:04" amount="8000" vtu-plan="Mobile Data" :succesful="false" />
                         </div>

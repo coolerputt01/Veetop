@@ -27,6 +27,11 @@ const router = createRouter({
       path: '/dashboard',
       name: 'dashboard',
       component: () => import('../views/DashboardView.vue'),
+    },
+    {
+      path: '/airtime',
+      name: 'airtime',
+      component: () => import('../views/AirtimePurchaseView.vue')
     }
   ],
 })
