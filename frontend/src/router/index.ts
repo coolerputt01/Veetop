@@ -32,6 +32,11 @@ const router = createRouter({
       path: '/airtime',
       name: 'airtime',
       component: () => import('../views/AirtimePurchaseView.vue')
+    },
+    {
+      path:'/data',
+      name:'/data',
+      component: () => import('../views/DataPurchaseView.vue')
     }
   ],
 })

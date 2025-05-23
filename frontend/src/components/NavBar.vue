@@ -29,13 +29,13 @@ switch(route.name) {
 <template>
     <nav class="nav justify-content-between" style="position: fixed;bottom: 0;width: 100vw;height: 7vh;background-color: #fff; z-index: 1000;">
         <li class="nav-item">
-            <img :src="homeImgPath" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s; object-fit:cover;">
+            <img :src="homeImgPath" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s;">
         </li>
         <li class="nav-item">
-            <img v-lazy="'/src/assets/notification.svg'" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s; object-fit:cover;">
+            <img v-lazy="'/src/assets/notification.svg'" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s;">
         </li>
         <li class="nav-item">
-            <img :src="profileImgPath" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s; object-fit:cover;">
+            <img :src="profileImgPath" class="nav-link" alt="VeeTop NavBar icon" style="width: 3.2em;height: 3.2em;transition: all 0.5s;">
         </li>
     </nav>
 </template>

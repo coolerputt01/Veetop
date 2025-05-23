@@ -3,90 +3,54 @@ import { ref ,onUnmounted,computed } from 'vue';
 import type { Ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-import { auth } from '@/scripts/firebase.ts';
-import { signInWithEmailAndPassword  } from 'firebase/auth';
+import {useToast} from 'vue-toast-notification';
+import 'vue-toast-notification/dist/theme-sugar.css';
 
-import { getUser ,buyData,buyAirtime,getAllDataTransaction,queryDataTransaction,queryAirtimeTransaction} from "@/scripts/vitual-topup.ts";
+import { auth } from '@/scripts/firebase.ts';
+import { signInWithEmailAndPassword ,setPersistence, browserLocalPersistence, browserSessionPersistence } from 'firebase/auth';
+
+const $toast = useToast();
 
 const email : Ref<string> = ref('');
 const password : Ref<string> = ref('');
+const rememberMe = ref(false);
 
 const router = useRouter();
-function redirect() {
-    router.push('/signup')
-}
 
-const passw : Ref<HTMLElement | null> = ref(null);
-const isClicked : Ref<boolean> = ref(false);
-
-const isFocused : Ref<boolean> = ref(false);
-const timestamp = ref(Date.now());
-const base_time = ref(0);
-
-const show_seconds_display = computed(() => {
-  if (base_time.value === 0) return 0;
-  return Math.floor((timestamp.value - base_time.value) / 1000);
-});
-
-let timer: number | null = null;
-
-getUser();
-buyData();
-buyAirtime();
-getAllDataTransaction();
-queryDataTransaction(2);
-queryAirtimeTransaction(2);
-
-
-function startTimer() {
-  base_time.value = Date.now();
-  if (timer !== null) clearInterval(timer);
-  timer = window.setInterval(() => {
-    timestamp.value = Date.now();
-  }, 1000);
-}
-
-onUnmounted(() => {
-  if (timer !== null) clearInterval(timer);
-});
-
-const showToast : Ref<boolean> = ref(false);
-const toastText : Ref<HTMLElement | null> = ref(null);
 const isLoading : Ref<boolean> = ref(false); 
-const encounteredError : Ref<boolean> = ref(false);
 
-
-const toastColor = computed(() =>
-  encounteredError.value === false
-    ? "rgba(74, 247, 83, 0.25)"
-    : "rgba(255, 15, 55, 0.25)"
-);
-function showToastFunc(text:string) {
-    if( toastText.value === null){
-        return
-    }
-    showToast.value = true;
-    toastText.value.innerText = text;
+function showToastFunc(text:string,error:boolean) {
+  if(!error){
+    let instance = $toast.success(text, {
+      position: 'top-right'
+    });
+  }else {
+    let instance = $toast.error(text, {
+        position: 'top-right'
+      });
+  }
 }
 async function login(email:string,password:string) {
   try {
     isLoading.value = true;
-    encounteredError.value = false;
     const userCredential = await signInWithEmailAndPassword(auth, email, password);
     const user = userCredential.user;
     console.log('Signed in user:', user.email);
-    showToastFunc("User Logn In succesful.")
-    startTimer();
+    showToastFunc("Login In succesful.",false);
+    const persistence = rememberMe.value
+      ? browserLocalPersistence
+      : browserSessionPersistence
+
+    await setPersistence(auth, persistence)
     router.push('/dashboard');
   } catch (error: unknown) {
-    encounteredError.value = true;
     if (error instanceof Error) {
-      showToastFunc(error.message);
-      startTimer();
-      console.error('Sign-in error:', error.message);
+      showToastFunc(error.message,true);
+
+      console.error('Login error:', error.message);
     } else {
-      showToastFunc('Unknown error occurred during sign-in.');
-      startTimer();
+      showToastFunc('Unknown error occurred during sign-in.',true);
+
     }
   } finally {
     isLoading.value = false;
@@ -95,51 +59,136 @@ async function login(email:string,password:string) {
 
 </script>
 <template>
-    <main class="container-fluid" style="overflow: hidden;">
-        <div class="card ms-auto" v-show="showToast" style="width: 18rem;border: none;justify-content:flex-end;">
-            <div class="card-head" style="display: flex;justify-content: space-around;align-items: center;">
-                <div style="width:1.2em;height: 1.2em;border-radius: 50%;background-color: #000;margin:0.5em;"></div>
-                <strong class="me-auto">VeeTop</strong>
-                <small> {{ Math.floor(show_seconds_display) }}s</small>
-                <button type="button" class="btn-close"  @click="showToast = false"></button>
-            </div>
-            <div ref="toastText" class="card-body" :style="{'backgroundColor':toastColor}" style="border: 1px grey solid;border-radius: 5px !important;">
-                
-            </div>
-        </div>
-        <section style="display:flex;width:100vw;height: 100vh;align-items: center;padding:0;margin:0;flex-direction: column;">
-            <form style="width:100vw;height:50vh;display: flex;justify-content: center;flex-direction: column;margin-top: 10em;">
-                <h1 style="font-weight: 550;">Login</h1>
-                <input placeholder="Enter your email" @focusin="isFocused = true" @focusout="isFocused = false" :class="{'focus':isFocused}" type="text" class="p-3" v-model="email" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
-                <div class="input-group" style="position: relative;">
-                  <input ref="passw" placeholder="Enter your password" :type="isClicked ? 'text' : 'password'" class="p-3" v-model="password" style="border-radius: 50px;border: 0.5px grey solid;width:70%;height:8%;outline:none;">
-                  <img v-lazy="'/src/assets/eye.svg'" alt="Veetop eye Login icon" style="width: 1.3em;position: absolute;right:35%;top:20%;cursor: pointer;opacity: 0.7;" @click="isClicked = !isClicked;" >
-                </div>
-                <p class="text-dark">Don't have an account? <a href="#" @click.prevent="redirect">signup here</a></p>
-                <button @click.prevent="login(email,password)" class="p-2 justify-content-center" style="color:#fff;cursor: pointer;font-size:1.05em;background-color: #000;border-radius: 50px;width: 50% ;text-align: center;">
-                    <span v-if="!isLoading"> Login </span>
+    <main class="container-fluid" style="overflow: hidden;display: flex;justify-content: center;align-items: center;">
+        <section class="white" style="width:50vw;height: 100vh;background-color: #fff;padding-top:32px;display: flex;justify-content: center;align-items: center;flex-direction: column;">
+          <span style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
+              <h1 class="h1 display-1" style="font-weight: 600;color:grey;font-size: 2.4em;"><span style="color: #000">Vee</span>Top</h1>
+              <h2 style="font-size: 1.8em;font-weight: 700;">Sign in to your account</h2>
+              <p style="color: grey">Buy and transfer airtime and data with ease</p>
+            </span>
+            <form style="margin-top: 3%;">
+                <span class="span" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;width:50vw;">
+                  <label style="text-align: left; margin: 2%;font-size: 0.9em;width: 66%">Email Address</label>
+                  <input v-model="email" placeholder="Enter your email" type="email" class="p-3" style="border-radius: 8px;border: 0.5px grey solid;font-size: 1em;width:70%;height:2vh;outline:none;">
+                </span>
+                <span class="span" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;width:50vw;">
+                  <label style="text-align: left; margin: 2%;font-size: 0.9em;width: 66%">Password</label>
+                  <input v-model="password" placeholder="Enter your password" type="password" class="p-3" style="border-radius: 8px;border: 0.5px grey solid;font-size: 1em;width:70%;height:2vh;outline:none;">
+                </span>
+                <span class="span" style="display: flex;justify-content: flex-start;align-items: center;width: 50vw;margin: 3%;">
+                  <div class="rmme" style="display: flex;justify-content: center;align-items: center;gap: 4%;width: 100%;">
+                    <input type="checkbox" value="Remember me" v-model="rememberMe"><span style="font-size: 0.9em;display: flex;justify-content: center;align-items: center;">Remember me</span>
+                  </div>
+                </span>
+                <div style="display: flex;justify-content: center;align-items: center;width: 100%;">
+                  <button @click.prevent="login(email,password)" class="p-2 hover" style="background-color: #000;color: #fff;border-radius: 50px;width: 70%;border: none;outline: none;transition: all 0.5s;">
+                    <span v-if="isLoading"> Login </span>
                     <div v-else class="spinner-border text-light" role="status">
-                        <span class="visually-hidden">Loading...</span>
+                        <span class="visually-hidden">processing...</span>
                     </div>
-                </button>
+                  </button>
+                </div>
             </form>
-            <p class="text" style="margin-top: 10em;color: grey;">Veetop is very sensitive with your information.&#128064;</p>
+            <span style="width:100%">
+              <p style="color: grey;font-size: 0.9em;text-align: center;margin: 2%;">Don't have an account? <a href="#" @click="router.push('/signup')">Sign up</a></p>
+            </span>
+            <span class="span span-text" style="width: 50vw;position: relative;height: 20vh;">
+              <p class="text" style="position:absolute;bottom: 0;left:25%;color:grey;font-size: 0.9em;">Veetop is very sensitive with your information.&#128064;</p>
+            </span>
+        </section>
+        <section class="grid" style="width:50vw;height: 100vh;background-color: #000;">
+            <span>
+              <section style="color: #fff;font-weight: 1000;font-size: 1.2em;display: flex;justify-content: center;align-items: center;height: 100%;flex-direction: column;">
+                <h1 style="font-weight: 600;font-size: 1.8em;width: 60%;text-align: center;">
+                    Recharge Made Simple with VeeTop
+                </h1>
+                <p style="font-size: 0.9em;color: lightgray;font-weight: 400;margin: 5%;">Buy airtime and data, transfer to friends and family, all with a few clicks.</p>
+                <div style="display: flex;justify-content: center;align-items: center;gap: 5%">
+                  <div class="p-3" style="background-color: #242424;border-radius: 14px;flex: 0 0 auto">
+                    <span>
+                      <h3 style="font-size:1.2em;font-weight: 650;text-align: center;">Fast</h3>
+                      <p style="font-size:0.9em;font-weight: 400;">Instant delivery</p>
+                    </span>
+                  </div>
+
+                  <div class="p-3" style="background-color: #242424;border-radius: 14px;flex: 0 0 auto;transform: translateY(18%)">
+                    <span>
+                      <h3 style="font-size:1.2em;font-weight: 650;text-align: center;">Fast</h3>
+                      <p style="font-size:0.9em;font-weight: 400;">Instant delivery</p>
+                    </span>
+                  </div>
+
+                  <div class="p-3" style="background-color: #242424;border-radius: 14px;flex: 0 0 auto">
+                    <span>
+                      <h3 style="font-size:1.2em;font-weight: 650;text-align: center;">Fast</h3>
+                      <p style="font-size:0.9em;font-weight: 400;">Instant delivery</p>
+                    </span>
+                  </div>
+                </div>
+
+              </section>
+            </span>
         </section>
     </main>
 </template>
 <style scoped>
-.focus {
-    outline: none;
+.grid {
+  position: relative;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.15) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.15) 1px, transparent 1px);
+  background-size: 64px 64px;
+  background-color: #000;
+  overflow: hidden;
 }
-form > * {
-    margin: 0.4em;
+
+.grid::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+  background:
+    radial-gradient(circle at top left, rgba(0,0,0,1), transparent 50%),
+    radial-gradient(circle at top right, rgba(0,0,0,1), transparent 50%),
+    radial-gradient(circle at bottom left, rgba(0,0,0,1), transparent 50%),
+    radial-gradient(circle at bottom right, rgba(0,0,0,1), transparent 50%);
 }
-button:hover {
-    opacity: 0.8;
+
+.hover:hover {
+  opacity: 0.8;
 }
-@media (min-width:768px) {
-    .text {
-        margin-top: 5em !important;
-    }
+
+@media (max-width:853px) {
+  .grid {
+    display: none;
+  }
+  .white {
+    width: 100vw !important;
+  }
+  input {
+    width: 70vw !important;
+  }
+  button {
+    width: 50vw !important;
+  }
+  .span {
+    width: 100vw !important;
+  }
+  .rmme {
+    width: 100vw !important;
+    justify-content: flex-start !important;
+  }
+  .rmme > span {
+    width: 50vw !important;
+  }
+  .span-text {
+    left: 0 !important;
+    margin-top: 5em;
+    height: 42vh !important;
+  }
 }
 </style>
