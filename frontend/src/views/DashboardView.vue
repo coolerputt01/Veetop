@@ -70,6 +70,7 @@ const checkSize = computed(() => window.innerWidth > 850);
                     </div>
                 </div>
             </nav>
+            <NavBar />
        </section>
     </main>
 </template>
