@@ -51,7 +51,7 @@ const router = useRouter();
           <h1 class="h1 display-1" style="font-weight: 600;color:grey;"><span style="color: #fff">Vee</span>Top</h1>
         </span>
         <h3 style="color: grey;font-weight: 400;font-size: medium;" class="text-left" >Internetworking made available for all...</h3>
-        <button style="background-color: #fff;cursor: pointer; border-radius: 50px;color:white;width:30vw;border:none;outline: none;color:#000;transition:all 0.3s;" class="my-4 p-2" :class="{'hovered':isHovered}" @mouseover="isHovered= true" @mouseleave="isHovered=false" @click.prevent="router.push('/signup')"> Get Started</button>
+        <button style="background-color: #fff;cursor: pointer; border-radius: 50px;;width:30vw;border:none;outline: none;color:#000;transition:all 0.3s;" class="my-4 p-2" :class="{'hovered':isHovered}" @mouseover="isHovered= true" @mouseleave="isHovered=false" @click.prevent="router.push('/signup')"> Get Started</button>
       </div>
       <span>
         <img v-lazy="'https://i.ibb.co/C5gVkBLy/Veetop-Hand.png'" alt="Veetop Phone illustration" class="w-100 mx-3" v-show="!isMobileRef">

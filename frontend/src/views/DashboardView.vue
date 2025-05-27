@@ -1,7 +1,12 @@
 <script setup lang="ts">
-import { ref ,computed} from 'vue';
+import { ref ,computed , onBeforeMount} from 'vue';
 import type { Ref } from 'vue';
 import { useRouter } from 'vue-router';
+
+import { doc, getDoc } from 'firebase/firestore';
+import { auth, firestore } from '@/scripts/firebase';
+
+import axios from 'axios';
 
 import NavBar from '@/components/NavBar.vue';
 
@@ -10,14 +15,48 @@ import wallet from '@/assets/wallet-eye.svg';
 import menuIcon from '@/assets/menub.svg';
 
 import TransactionCard from '@/components/TransactionCard.vue';
-
 const walletShow : Ref<boolean> = ref(true);
 
 const router = useRouter();
 
 const imgSrc = computed(() => walletShow.value ? wallet : walletClosed);
-
 const checkSize = computed(() => window.innerWidth > 850);
+
+const username : Ref<string> = ref('');
+
+const getUser = async () => {
+    const user = auth.currentUser;
+
+    if (!user) {
+        console.error("No user is currently signed in.");
+        return;
+    }
+
+    try {
+        const userDocRef = doc(firestore, 'users', user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            username.value = userData.fullname;
+        } else {
+            console.error("User document not found.");
+            return;
+        }
+    }catch(error: unknown) {
+        if(error instanceof Error){
+            console.error("A normal error occurred", error);
+        }else if(axios.isAxiosError(error)) {
+            console.error("An Axios Error", error);
+        }else {
+            console.error("A text error",error);
+        }
+    }
+} 
+
+onBeforeMount(() => {
+    getUser();
+});
 
 </script>
 
@@ -57,7 +96,7 @@ const checkSize = computed(() => window.innerWidth > 850);
                                             <img v-lazy="'/src/assets/profile.svg'" alt="VeeTop profile icon" style="width: 1.5em;height: 1.5em;">
                                         </div>
                                         <div style="display: flex;justify-content: center;align-items: center;text-align: left;">
-                                            <p style="color: #000;font-weight: 600;">coolerputt01</p>
+                                            <p style="color: #000;font-weight: 600;">{{ username }}</p>
                                         </div>
                                     </span>
                                     <p v-else style="font-weight: 600;color: #000;"> Profile</p>
@@ -71,6 +110,26 @@ const checkSize = computed(() => window.innerWidth > 850);
                 </div>
             </nav>
             <NavBar />
+            <section class="p-4" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column; color: #000;overflow-x: hidden;height: 86vh;" :style="{marginLeft: checkSize ? '14vw' :'none',borderLeft: checkSize ? '1px solid lightgray': 'none' }">
+                <div style="width: 100%;">
+                    <h2 style="color: #000;text-align: left;font-weight:600;">Welcome back, {{ username }}!</h2>
+                    <p style="color: grey;text-align: left;">Manage your airtime and data packages</p>
+                </div>
+                <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;">
+                    <div class="grid p-4 mt-5" style="width: 80%;background-color: #000;border-radius: 12px;">
+                        <span>
+                            <h1 style="font-size: 1.8em;text-align: left;">Account Balance</h1>
+                            <p style="font-size: 0.9em;text-align: left;color: lightgrey;font-weight: 550;">Available for transactions</p>
+                        </span>
+                        <span style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: column;">
+                            <span style="font-weight: 700;font-size: 2.4em;width: 100%;">&#8358;500</span>
+                            <div style="width: 100%;">
+                                <button class="p-2" style="background-color: #fff;border-radius: 50px;color: #000;font-size: 0.9em;font-weight: 500;">Add Money</button>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </section>
        </section>
     </main>
 </template>
