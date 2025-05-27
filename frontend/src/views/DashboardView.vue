@@ -124,7 +124,7 @@ onBeforeMount(() => {
                 <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;">
                     <div class="grid p-4 mt-5" style="width: 80%;background-color: #000;border-radius: 12px;">
                         <span>
-                            <h1 style="font-size: 1.8em;text-align: left;">Account Balance</h1>
+                            <h1 style="font-size: 1.8em;text-align: left;font-weight: 500;">Account Balance</h1>
                             <p style="font-size: 0.9em;text-align: left;color: lightgrey;font-weight: 550;">Available for transactions</p>
                         </span>
                         <span style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: column;">
@@ -139,7 +139,7 @@ onBeforeMount(() => {
                     <div>
                         <h3 style="color: #000;font-size: 1.5em;font-weight: 600;">Quick Actions</h3>
                     </div>
-                    <div class=" card-g mt-4" style="display: flex;justify-content: flex-start;gap: 5%;padding-bottom: 20px;align-items: center;width:100%;overflow-x: scroll;overflow-y: hidden;">
+                    <div class=" card-g mt-4" style="display: flex;justify-content: flex-start;gap: 5%;padding-bottom: 45px;align-items: center;width:100%;overflow-x: scroll;overflow-y: hidden;">
                         <ActionCard head="Buy Airtime" desc="Purchase airtime for yourself" route="/airtime" :icon="call"/>
                         <ActionCard head="Buy Data" desc="Purchase data bundles" route="/data" :icon="data"/>
                         <ActionCard head="Transfer" desc="Send airtime or data" route="/transfer" :icon="transfer"/>
@@ -151,12 +151,12 @@ onBeforeMount(() => {
                         <h3 style="color: #000;font-size: 1.5em;font-weight: 600;">Recent Transactions</h3>
                         <div class="mt-5">
                             <ul class="list-group">
-                                <TransactionCard />
-                                <TransactionCard />
-                                <TransactionCard />
-                                <TransactionCard />
-                                <TransactionCard />
-                                <TransactionCard />
+                                <TransactionCard title="Airtime Purchase" number="08012345678" date="5/19/2025" :amount="-1000" :successful="true"/>
+                                <li class="list-group-item" style="background-color: #fbffcf;">
+                                    <div style="width: 100%;text-align: center;">
+                                        <span href="#" style="color:#000;text-decoration: none;font-weight: 600;cursor: pointer;">See all transactions</span>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
