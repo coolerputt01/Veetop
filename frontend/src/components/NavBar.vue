@@ -154,7 +154,7 @@ img {
 li:hover {
   transform: translateY(-5%);
   cursor: pointer;
-  background-color: rgb(68, 68, 68) !important;
+  background-color: rgb(117, 117, 117) !important;
   border-radius: 14px;
   z-index: 100;
   span {

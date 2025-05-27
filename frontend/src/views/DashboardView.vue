@@ -9,12 +9,18 @@ import { auth, firestore } from '@/scripts/firebase';
 import axios from 'axios';
 
 import NavBar from '@/components/NavBar.vue';
+import TransactionCard from '@/components/TransactionCard.vue'
 
 import walletClosed from '@/assets/wallet-eye-closed.svg';
 import wallet from '@/assets/wallet-eye.svg';
 import menuIcon from '@/assets/menub.svg';
 
-import TransactionCard from '@/components/TransactionCard.vue';
+import ActionCard from '@/components/ActionCard.vue';
+import call from '@/assets/airtime.svg';
+import data from '@/assets/data.svg';
+import transfer from '@/assets/transfer.svg';
+import history from '@/assets/history.svg';
+
 const walletShow : Ref<boolean> = ref(true);
 
 const router = useRouter();
@@ -63,9 +69,9 @@ onBeforeMount(() => {
 <template>
     <main class="container-fluid">
        <section>
-            <nav class="navbar navbar-expand-lg p-2" style="border-bottom: 0.1px solid lightgrey;">
+            <nav class="navbar navbar-expand-lg" style="border-bottom: 0.1px solid lightgrey;padding: 0;padding-top: 1%;">
                 <div class="container-fluid" style="display: flex;justify-content: space-between;align-items: center;">
-                    <a href="#" class="navbar-brand"><h1 class="h5 display-1" style="font-weight: 600;color:grey;font-size: 1.5em;"><span style="color: #000">Vee</span>Top</h1></a>
+                    <a href="#" class="navbar-brand"><h1 class="h5 display-1" style="font-weight: 600;color:grey;font-size: 1.2em;"><span style="color: #000">Vee</span>Top</h1></a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" style="border: none;outline: none;" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                         <img v-lazy="menuIcon" alt="VeeTop Menu icon" style="height: 1.2em;height: 1.2em;">
                     </button>
@@ -73,7 +79,7 @@ onBeforeMount(() => {
                         <ul class="navbar-nav">
                             <li class="nav-item">
                                 <div >
-                                    <h3 style="color: grey;font-weight: 400;text-align: center;font-size: 0.9em;" :style="{textAlign: !checkSize ?'left':'center',marginLeft: !checkSize ? '10%':'0'}">Balance</h3>
+                                    <h3 style="color: grey;font-weight: 400;text-align: center;font-size: 0.8em;" :style="{textAlign: !checkSize ?'left':'center',marginLeft: !checkSize ? '10%':'0'}">Balance</h3>
                                     <p style="color: #000;font-weight: 600;text-align: center;font-size: 1.2em;" :style="{textAlign: !checkSize ?'left':'center',marginLeft: !checkSize ? '10%':'0'}">#500</p>
                                 </div>
                             </li>
@@ -96,13 +102,13 @@ onBeforeMount(() => {
                                             <img v-lazy="'/src/assets/profile.svg'" alt="VeeTop profile icon" style="width: 1.5em;height: 1.5em;">
                                         </div>
                                         <div style="display: flex;justify-content: center;align-items: center;text-align: left;">
-                                            <p style="color: #000;font-weight: 600;">{{ username }}</p>
+                                            <span style="color: #000;font-weight: 600;">{{ username }}</span>
                                         </div>
                                     </span>
                                     <p v-else style="font-weight: 600;color: #000;"> Profile</p>
                                 </div>
                                 <div>
-                                    <button class="p-2" style="border: 1px solid grey;color: #000;background-color: transparent;border-radius: 8px;font-weight: 700;">Logout</button>
+                                    <button class="p-2" style="border: 1px solid grey;color: #000;background-color: transparent;border-radius: 8px;font-weight: 700;font-size: 0.9em;">Logout</button>
                                 </div>
                             </li>
                         </ul>
@@ -110,7 +116,7 @@ onBeforeMount(() => {
                 </div>
             </nav>
             <NavBar />
-            <section class="p-4" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column; color: #000;overflow-x: hidden;height: 86vh;" :style="{marginLeft: checkSize ? '14vw' :'none',borderLeft: checkSize ? '1px solid lightgray': 'none' }">
+            <section class="main p-4" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;color: #000;overflow-x: hidden;overflow-y: scroll;height: 86vh;scroll-behavior: smooth;" :style="{marginLeft: checkSize ? '14vw' :'none',borderLeft: checkSize ? '1px solid lightgray': 'none' }">
                 <div style="width: 100%;">
                     <h2 style="color: #000;text-align: left;font-weight:600;">Welcome back, {{ username }}!</h2>
                     <p style="color: grey;text-align: left;">Manage your airtime and data packages</p>
@@ -124,11 +130,37 @@ onBeforeMount(() => {
                         <span style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: column;">
                             <span style="font-weight: 700;font-size: 2.4em;width: 100%;">&#8358;500</span>
                             <div style="width: 100%;">
-                                <button class="p-2" style="background-color: #fff;border-radius: 50px;color: #000;font-size: 0.9em;font-weight: 500;">Add Money</button>
+                                <button class="p-2" style="background-color: #fff;border-radius: 50px;color: #000;font-size: 0.8em;font-weight: 550;transition: all 0.3s;outline: none;border: none;">Add Money</button>
                             </div>
                         </span>
                     </div>
                 </div>
+                <section class="container mt-5">
+                    <div>
+                        <h3 style="color: #000;font-size: 1.5em;font-weight: 600;">Quick Actions</h3>
+                    </div>
+                    <div class=" card-g mt-4" style="display: flex;justify-content: flex-start;gap: 5%;padding-bottom: 20px;align-items: center;width:100%;overflow-x: scroll;overflow-y: hidden;">
+                        <ActionCard head="Buy Airtime" desc="Purchase airtime for yourself" route="/airtime" :icon="call"/>
+                        <ActionCard head="Buy Data" desc="Purchase data bundles" route="/data" :icon="data"/>
+                        <ActionCard head="Transfer" desc="Send airtime or data" route="/transfer" :icon="transfer"/>
+                        <ActionCard head="History" desc="View your transactionss" route="/history" :icon="history"/>
+                    </div>
+                </section>
+                <section class="container mt-4">
+                    <div>
+                        <h3 style="color: #000;font-size: 1.5em;font-weight: 600;">Recent Transactions</h3>
+                        <div class="mt-5">
+                            <ul class="list-group">
+                                <TransactionCard />
+                                <TransactionCard />
+                                <TransactionCard />
+                                <TransactionCard />
+                                <TransactionCard />
+                                <TransactionCard />
+                            </ul>
+                        </div>
+                    </div>
+                </section>
             </section>
        </section>
     </main>
@@ -160,17 +192,31 @@ button:hover {
     cursor: pointer;
 }
 
-.table::-webkit-scrollbar {
-    height: 3px;
-    width: 8px;
+.card-g::-webkit-scrollbar {
+    height: 5px;
 }
 
-.table::-webkit-scrollbar-track {
+.card-g::-webkit-scrollbar-track {
     background: transparent; /* Light gray track */
     border-radius: 8px;
 }
 
-.table::-webkit-scrollbar-thumb {
+.card-g::-webkit-scrollbar-thumb {
+    background-color: #000; /* Customize to match your theme */
+    border-radius: 8px;
+}
+
+.main::-webkit-scrollbar {
+    height: 3px;
+    width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+    background: transparent; /* Light gray track */
+    border-radius: 8px;
+}
+
+.main::-webkit-scrollbar-thumb {
     background-color: #000; /* Customize to match your theme */
     border-radius: 8px;
     cursor: pointer;
