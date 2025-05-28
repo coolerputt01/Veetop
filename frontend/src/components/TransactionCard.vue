@@ -24,7 +24,7 @@
         </span>
         <span v-else>
             <p style="color: #000;font-weight: 650;font-size: 1em;">&#8358;{{ amount }}</p>
-            <span class="p-2" style="background-color: lightcoral;color: red;width: 100%;text-align: center;border-radius: 50px;font-size: 0.8em;font-weight: 500;">uncompleted</span>
+            <span class="px-2" style="background-color: lightcoral;color: red;width: 100%;text-align: center;border-radius: 50px;font-size: 0.8em;font-weight: 500;">uncompleted</span>
         </span>
     </li>
 </template>

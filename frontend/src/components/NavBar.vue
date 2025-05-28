@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed ,watchEffect } from 'vue';
 import type { Ref } from 'vue';
 
 const checkSize = computed(() => window.innerWidth > 850);
@@ -16,15 +16,20 @@ import dataFilled from '@/assets/data.svg';
 import airtimeFilled from '@/assets/airtime.svg';
 import bell from '@/assets/notification.svg';
 
+import { useRouter, useRoute } from 'vue-router';
+
 const homeImgPath: Ref<string> = ref(homeFilled);
 const profileImgPath: Ref<string> = ref(profileFilled);
 const bellImgPath: Ref<string> = ref(bell);
 const dataImgPath: Ref<string> = ref(dataFilled);
 const airtimeImgPath: Ref<string> = ref(airtimeFilled);
 
+const router = useRouter();
+const route = useRoute();
+
 const selectedNav: Ref<string> = ref('');
 
-const selectNav = (name: string) => {
+const selectNav = (name: string = route.name as string) => {
   selectedNav.value = name;
 
   homeImgPath.value = homeFilled;
@@ -37,9 +42,11 @@ const selectNav = (name: string) => {
   switch (name) {
     case 'home':
       homeImgPath.value = home;
+      router.push('/dashboard');
       break;
     case 'airtime':
       airtimeImgPath.value = airtime;
+      router.push('/airtime');
       break;
     case 'notification':
       bellImgPath.value = notification;
@@ -52,6 +59,14 @@ const selectNav = (name: string) => {
       break;
   }
 };
+
+watchEffect(() => {
+  if (route.name) {
+    console.log('Route name (watchEffect):', route.name);
+    selectedNav.value = route.name as string;
+    selectNav(route.name as string);
+  }
+});
 </script>
 
 <template>

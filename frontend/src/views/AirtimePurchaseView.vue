@@ -1,45 +1,93 @@
 <script setup lang="js">
-import { useRouter } from 'vue-router';
+import mtn from '@/assets/mtn.png';
+import airtel from '@/assets/airtel.png';
+import glo from '@/assets/glod.png';
+import mobile from '@/assets/mobile.png';
 
-const router = useRouter();
+
+import { computed } from 'vue';
+const checkSize = computed(() => window.innerWidth > 850)
 
 </script>
 
 <template>
-    <main style="width: 100%;margin: 0;padding: 0;position: relative;height: 100vh;">
+    <main class="container-fluid">
         <section>
-            <nav class="nav" style="display: flex;justify-content: left;align-items: center; width: 100vw;height: 13vh;background-color: #fff;">
-                <li style="display: flex;justify-content: flex-start;align-items: center; width: 100vw;flex-direction: row">
-                    <img v-lazy="'/src/assets/left.svg'" alt="VeeTop left arrow icon" class="nav-link" style="width: 3.2em;height: 3.2em;z-index: 1000;cursor: pointer;" @click="router.back()" >
-                    <h1 style="font-size: 1.35em;font-weight: 600;">Buy Airtime</h1>
-                </li>
-            </nav>
-        </section>
-        
-        <section>
-            <span style="display: flex;justify-content: center;align-items: center;width: 100vw;flex-direction:column;height: 50vh;">
-                <label for="number" style="font-weight: 660;font-size: 1.3em;border-bottom:1px solid lightgrey;margin: 4%;text-align: left;width: 50%;">Top Up</label>
-                <div style="display: flex;align-items: center;justify-content: center;width: 100vw;padding: 30px;">
-                <div style="display: flex;justify-content: center;align-items: center;border: 0.7px solid grey;border-radius: 50px;width: 70vw;gap:5%">
-                    <div style="display: flex;justify-content: center;align-items: center;flex-direction: column;">
-                    <details style="display: flex;align-items: center;justify-content: flex-start;transition: all 1s;" >
-                        <summary class="form-select" style="border-radius: 50px !important;flex: 0 0 auto;border: none !important;">Plan</summary>
-                        <ul style="position: absolute; width: 50vw;top:25% !important;left:15%;background-color: lightgray;border-radius: 14%;padding: 3%;box-shadow: 5px 5px 15px 5px rgba(0,0,0,0.1);">
-                            <li class="select" style="display: flex;width:100%;border-radius: 50px; justify-content: flex-start;transition: all 0.5s;align-items: center;gap:2%;padding: 1%;border-radius: 50px;cursor: pointer;"> <img v-lazy="'/src/assets/mtn.png'" alt="VeeTop MTN logo"style="width: 2em;height: 2em;border-radius: 50%;"> <p style="font-weight: 700;">MTN</p></li>
-                            <li class="select" style="display: flex;width:100%;border-radius: 50px; justify-content: flex-start;transition: all 0.5s;align-items: center;gap:2%;padding: 1%;border-radius: 50px;cursor: pointer;"> <img v-lazy="'/src/assets/airtel.png'" alt="VeeTop MTN logo"style="width: 2em;height: 2em;border-radius: 50%;"> <p style="font-weight: 700;">Airtel</p></li>
-                            <li class="select" style="display: flex;width:100%;border-radius: 50px; justify-content: flex-start;transition: all 0.5s;align-items: center;gap:2%;padding: 1%;border-radius: 50px;cursor: pointer;"> <img v-lazy="'/src/assets/glod.png'" alt="VeeTop MTN logo"style="width: 2em;height: 2em;border-radius: 50%;"> <p style="font-weight: 700;">Glo</p></li>
-                        </ul>
-                    </details>
-                    <input class="number" type="text" placeholder="Enter your phone number" name="number" v-model="phone_number" style="padding: 12px;border-radius: 50px;border: none;">
+            <section class="main p-4" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;color: #000;overflow-x: hidden;overflow-y: scroll;height: 86vh;scroll-behavior: smooth;" :style="{marginLeft: checkSize ? '14vw' :'none',borderLeft: checkSize ? '1px solid lightgray': 'none' }">
+                <div style="width: 100%;">
+                    <h2 style="color: #000;text-align: left;font-weight:600;">Buy Airtime</h2>
+                    <p style="color: grey;text-align: left;">Purchase airtime for any mobile number</p>
+                </div>
+                <section style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: row;gap: 5%;">
+                    <div class="card p-5 mt-3" style="min-width: 60%">
+                        <div style="width: 100%;">
+                            <h3 style="color: #000;text-align: left;font-weight:600;font-size: 1.5em;">Airtime Purchase</h3>
+                            <p style="color: grey;text-align: left;font-size: 0.8em;">Select network, enter number and amount</p>
+                        </div>
+                        <div>
+                            <p class="mt-5" style="color: grey;text-align: left;font-size: 0.8em;font-weight: 600;">Select Network</p>
+                            <div class="p-1" style="display: flex;justify-content: flex-start;gap: 10%;align-items: center;width: 100%;flex-direction: row;">
+                                <span style="cursor: pointer;">
+                                    <img :src="mtn" alt="VeeTop MTN Icon" style="width: 3em;height: 3em;border-radius: 50%;">
+                                    <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">MTN</p>
+                                </span>
+                                
+                                <span style="cursor: pointer;">
+                                    <img :src="airtel" alt="VeeTop Airtel Icon" style="width: 3em;height: 3em;border-radius: 50%;">
+                                    <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">Airtel</p>
+                                </span>
+                                    <span style="cursor: pointer;">
+                                    <img :src="glo" alt="VeeTop Glo Icon" style="width: 3em;height: 3em;border-radius: 50%;">
+                                    <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">Glo</p>
+                                </span>
+                                
+                                <span style="cursor: pointer;">
+                                    <img :src="mobile" alt="VeeTop 9Mobile Icon" style="width: 3em;height: 3em;border-radius: 50%;">
+                                    <p style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.7em">9mobile</p>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;width: 100%;">
+                            <label style="color: grey;text-align: left;font-size: 0.9em;font-weight: 600;width: 100%;">Phone Number</label>
+                            <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;">
+                                <input type="text" class="mt-2" placeholder="Enter phone number" style="width: 80%;border-radius: 10px;outline: none;border: 1px solid grey;padding: 5px;font-size: 0.9em;" maxlength="11">
+                            </div>
+                        </div>
+                        <div class="mt-3" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;width: 100%;">
+                            <label style="color: grey;text-align: left;font-size: 0.9em;font-weight: 600;width: 100%;">Select amount</label>
+                            <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;">
+                                <input type="number" class="mt-2" placeholder="Enter custom amount" style="width: 80%;border-radius: 10px;outline: none;border: 1px solid grey;padding: 5px;font-size: 0.9em;" maxlength="11">
+                            </div>
+                        </div>
+                        <div class="mt-4" style="width: 80%">
+                            <button class="p-2" style="width: 100%;background-color: #000;border-radius: 10px;color: #fff;font-size: 0.8em;font-weight: 550;transition: all 0.3s;outline: none;border: none;text-align: center;">Buy Airtime</button>
+                        </div>
                     </div>
-                </div>
-            </div>
-            <input class="number" type="text" placeholder="Airtime" name="number" v-model="airtime" style="padding: 12px;border-radius: 50px;border: none;width: 70vw;background-color: lightgray;">
-            </span>
-            <section style="margin-top:4%;display: flex;justify-content: center;align-items: center;">
-                <div style="width:70vw">
-                    <button class="p-2" style="background-color: #000;color: #fff;border-radius: 50px;width: 100%;border: none;outline: none;transition: all 0.5s;">Top Up</button>
-                </div>
+                    <section class="gap-5" style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: column;height: 100%;">
+                        <div class="card p-2" style="width: 85%;">
+                            <div class="card-body">
+                                <h1 class="card-title" style="text-align: left;font-size: 1.8em;font-weight: 600;">Your Balance</h1>
+                                <span style="text-align: left;font-size: 2.4em;font-weight: 700;color: #000;">
+                                    ₦500
+                                </span>
+                                <p class="card-text" style="color: grey;text-align: left;font-size: 0.9em;font-weight: 500;width: 100%;">
+                                    Available for transactions
+                                </p>
+                            </div>
+                        </div>
+                        <div class="card p-2" style="width: 85%;">
+                            <div class="card-body">
+                                <h1 class="card-title" style="text-align: left;font-size: 1.8em;font-weight: 600;">How it works</h1>
+                                    <div class="gap-3" style="display: flex;justify-content: flex-start;align-items: center;flex-direction: column;">
+                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">1</span><span style="color: #000;font-size: 0.8em;">Select your preferred network provider</span></span>
+                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">2</span><span style="color: #000;font-size: 0.8em;">Enter recipient's phone number</span></span>
+                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">3</span><span style="color: #000;font-size: 0.8em;">Select or enter desired amount</span></span>
+                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">4</span><span style="color: #000;font-size: 0.8em;text-align: left;">Click "<b>Buy Airtime"</b> to complete your purchase</span></span>
+                                    </div>
+                            </div>
+                        </div>
+                    </section>
+                </section>
             </section>
         </section>
     </main>
