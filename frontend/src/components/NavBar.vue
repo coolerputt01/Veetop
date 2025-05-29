@@ -53,6 +53,7 @@ const selectNav = (name: string = route.name as string) => {
       break;
     case 'data':
       dataImgPath.value = data;
+      router.push('/data');
       break;
     case 'profile':
       profileImgPath.value = profile;
@@ -94,17 +95,6 @@ watchEffect(() => {
         <span>Recharge</span>
       </li>
 
-      <li class="nav-item" :class="{ selected: selectedNav === 'notification' }" @mouseover="bellImgPath = notification"
-          @mouseleave="bellImgPath = selectedNav === 'notification' ? notification : bell"
-          @click="selectNav('notification')">
-        <img
-          :src="bellImgPath"
-          class="nav-link"
-          alt="Notifications"
-        />
-        <span>Notifications</span>
-      </li>
-
       <li class="nav-item" :class="{ selected: selectedNav === 'data' }" @mouseover="dataImgPath = data"
           @mouseleave="dataImgPath = selectedNav === 'data' ? data : dataFilled"
           @click="selectNav('data')">
@@ -114,6 +104,17 @@ watchEffect(() => {
           alt="Data"
         />
         <span>Buy Data</span>
+      </li>
+
+      <li class="nav-item" :class="{ selected: selectedNav === 'notification' }" @mouseover="bellImgPath = notification"
+          @mouseleave="bellImgPath = selectedNav === 'notification' ? notification : bell"
+          @click="selectNav('notification')">
+        <img
+          :src="bellImgPath"
+          class="nav-link"
+          alt="Notifications"
+        />
+        <span>Notifications</span>
       </li>
 
       <li class="nav-item" :class="{ selected: selectedNav === 'profile' }" @mouseover="profileImgPath = profile"

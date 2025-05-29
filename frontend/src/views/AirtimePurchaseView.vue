@@ -18,7 +18,7 @@ const checkSize = computed(() => window.innerWidth > 850)
                     <h2 style="color: #000;text-align: left;font-weight:600;">Buy Airtime</h2>
                     <p style="color: grey;text-align: left;">Purchase airtime for any mobile number</p>
                 </div>
-                <section style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: row;gap: 5%;">
+                <section style="display: flex;justify-content: flex-start;align-items: center;width: 100%;gap: 5%;" :style="{ flexDirection : checkSize ? 'row' : 'column'}">
                     <div class="card p-5 mt-3" style="min-width: 60%">
                         <div style="width: 100%;">
                             <h3 style="color: #000;text-align: left;font-weight:600;font-size: 1.5em;">Airtime Purchase</h3>
@@ -82,7 +82,7 @@ const checkSize = computed(() => window.innerWidth > 850)
                                         <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">1</span><span style="color: #000;font-size: 0.8em;">Select your preferred network provider</span></span>
                                         <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">2</span><span style="color: #000;font-size: 0.8em;">Enter recipient's phone number</span></span>
                                         <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">3</span><span style="color: #000;font-size: 0.8em;">Select or enter desired amount</span></span>
-                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">4</span><span style="color: #000;font-size: 0.8em;text-align: left;">Click "<b>Buy Airtime"</b> to complete your purchase</span></span>
+                                        <span style="width: 95%"><span style="color: #fff;background-color: #000;width: 2em;height: 2em ;border-radius: 50%;padding: 8px;object-fit: cover;font-size: 0.5em;margin-right: 2%;">4</span><span style="color: #000;font-size: 0.8em;text-align: left;">Click "<b style="color: #000;">Buy Airtime"</b> to complete your purchase</span></span>
                                     </div>
                             </div>
                         </div>
@@ -95,6 +95,21 @@ const checkSize = computed(() => window.innerWidth > 850)
 <style scoped>
 input {
     color: #000;
+}
+.main::-webkit-scrollbar {
+    height: 3px;
+    width: 8px;
+}
+
+.main::-webkit-scrollbar-track {
+    background: transparent; /* Light gray track */
+    border-radius: 8px;
+}
+
+.main::-webkit-scrollbar-thumb {
+    background-color: #000; /* Customize to match your theme */
+    border-radius: 8px;
+    cursor: pointer;
 }
 summary {
     cursor: pointer !important;
