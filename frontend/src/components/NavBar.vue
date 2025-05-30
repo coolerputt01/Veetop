@@ -6,7 +6,7 @@ const checkSize = computed(() => window.innerWidth > 850);
 
 import home from '@/assets/homew.svg';
 import profile from '@/assets/profilew.svg';
-import notification from '@/assets/bell.svg';
+import history from '@/assets/historyw.svg';
 import data from '@/assets/dataw.svg';
 import airtime from '@/assets/airtimew.svg';
 
@@ -14,13 +14,14 @@ import homeFilled from '@/assets/home.svg';
 import profileFilled from '@/assets/profile.svg';
 import dataFilled from '@/assets/data.svg';
 import airtimeFilled from '@/assets/airtime.svg';
-import bell from '@/assets/notification.svg';
+import historyfilled from '@/assets/history.svg';
+
 
 import { useRouter, useRoute } from 'vue-router';
 
 const homeImgPath: Ref<string> = ref(homeFilled);
 const profileImgPath: Ref<string> = ref(profileFilled);
-const bellImgPath: Ref<string> = ref(bell);
+const bellImgPath: Ref<string> = ref(historyfilled);
 const dataImgPath: Ref<string> = ref(dataFilled);
 const airtimeImgPath: Ref<string> = ref(airtimeFilled);
 
@@ -34,7 +35,7 @@ const selectNav = (name: string = route.name as string) => {
 
   homeImgPath.value = homeFilled;
   airtimeImgPath.value = airtimeFilled;
-  bellImgPath.value = bell;
+  bellImgPath.value = historyfilled;
   dataImgPath.value = dataFilled;
   profileImgPath.value = profileFilled;
 
@@ -48,8 +49,9 @@ const selectNav = (name: string = route.name as string) => {
       airtimeImgPath.value = airtime;
       router.push('/airtime');
       break;
-    case 'notification':
-      bellImgPath.value = notification;
+    case 'history':
+      bellImgPath.value = history;
+      router.push('/history')
       break;
     case 'data':
       dataImgPath.value = data;
@@ -63,7 +65,6 @@ const selectNav = (name: string = route.name as string) => {
 
 watchEffect(() => {
   if (route.name) {
-    console.log('Route name (watchEffect):', route.name);
     selectedNav.value = route.name as string;
     selectNav(route.name as string);
   }
@@ -106,15 +107,15 @@ watchEffect(() => {
         <span>Buy Data</span>
       </li>
 
-      <li class="nav-item" :class="{ selected: selectedNav === 'notification' }" @mouseover="bellImgPath = notification"
-          @mouseleave="bellImgPath = selectedNav === 'notification' ? notification : bell"
-          @click="selectNav('notification')">
+      <li class="nav-item" :class="{ selected: selectedNav === 'history' }" @mouseover="bellImgPath = history"
+          @mouseleave="bellImgPath = selectedNav === 'history' ? history : historyfilled"
+          @click="selectNav('history')">
         <img
           :src="bellImgPath"
           class="nav-link"
-          alt="Notifications"
+          alt=" History"
         />
-        <span>Notifications</span>
+        <span>History</span>
       </li>
 
       <li class="nav-item" :class="{ selected: selectedNav === 'profile' }" @mouseover="profileImgPath = profile"

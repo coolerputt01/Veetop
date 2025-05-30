@@ -8,7 +8,7 @@ import { auth, firestore } from '@/scripts/firebase';
 import { getUser } from '@/scripts/firebase';
 
 
-import TransactionCard from '@/components/TransactionCard.vue'
+import TransactionCard from '@/components/TransactionCard.vue';
 
 import walletClosed from '@/assets/wallet-eye-closed.svg';
 import wallet from '@/assets/wallet-eye.svg';
