@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import type { Ref } from 'vue';
+import { useRouter } from 'vue-router';
 
+const router = useRouter();
 
 const props = defineProps<{
   icon: string,
@@ -13,7 +13,7 @@ const props = defineProps<{
 </script>
 
 <template>
-    <div class="card p-3" style="border-radius: 14px;transition: all 0.3s;flex: 0 0 auto;">
+    <div class="card p-3" style="border-radius: 14px;transition: all 0.3s;flex: 0 0 auto;" @click="router.push(route)">
       <div style="width: 100%; margin: 7%;">
         <img :src="icon" alt="Action Card VeerTop icon" style="width: 2.8em;height: 2.8em;background-color: lightgrey;border-radius: 50%;padding: 5%;box-sizing: border-box;transition: all 0.5s;">
       </div>

@@ -4,9 +4,13 @@ import { type Ref, ref , onBeforeMount} from 'vue';
 
 import { getUser } from '@/scripts/firebase';
 
+import { useRouter } from 'vue-router';
+
 import menuIcon from '@/assets/menub.svg';
 const checkSize = computed(() => window.innerWidth > 850);
 const username : Ref<string> = ref('');
+
+const router = useRouter();
 
 onBeforeMount( async () => {
     const name = await getUser();
@@ -37,26 +41,26 @@ onBeforeMount( async () => {
                 </ul>
                 <ul class="navbar-nav justify-content-between" style="width:38% !important;flex: 0 0 auto;">
                     <li class="nav-item" style="flex: 0 0 auto;">
-                        <div style="cursor: pointer;">
+                        <div style="cursor: pointer;" @click="router.push('/history')">
                             <p v-if="!checkSize" :style="{
                                 fontWeight: '600',
                                 color: '#000',
                                 marginLeft: checkSize ? '0' : '25%'
                                 }" >Notification</p>
-                            <img v-else v-lazy="'/src/assets/notification.svg'" alt="VeeTop notification icon" style="width: 2em;height: 2em;">
+                            <img v-else v-lazy="'/src/assets/notification.svg'" alt="VeeTop notification icon" style="width: 1.7em;height: 1.7em;" @click="router.push('/history')">
                         </div>
                     </li>
-                    <li class="nav-item lli" style="display: flex;justify-content: space-around;align-items: center; width: 25vw !important">
-                        <div style="display: flex;justify-content: center;align-items: center;flex: 0 0 auto" >
-                            <span v-if="checkSize">
+                    <li class="nav-item lli" style="display: flex;justify-content: space-around;align-items: center; width: 25vw !important;height: 100%;">
+                        <div style="display: flex;justify-content: center;align-items: center;height: 100%;" >
+                            <span v-if="checkSize" @click="router.push('/profile')" style="cursor: pointer;">
                                 <div>
-                                    <img v-lazy="'/src/assets/profile.svg'" alt="VeeTop profile icon" style="width: 1.5em;height: 1.5em;">
+                                    <img v-lazy="'/src/assets/profile.svg'" alt="VeeTop profile icon" style="width: 1.5em;height: 1.5em;box-sizing: border-box;">
                                 </div>
                                 <div style="display: flex;justify-content: center;align-items: center;text-align: left;">
                                     <span style="color: #000;font-weight: 600;">{{ username }}</span>
                                 </div>
                             </span>
-                            <p v-else style="font-weight: 600;color: #000;"> Profile</p>
+                            <p v-else style="font-weight: 600;color: #000;" @click="router.push('/profile')"> Profile</p>
                         </div>
                         <div>
                             <button class="p-2" style="border: 1px solid grey;color: #000;background-color: transparent;border-radius: 8px;font-weight: 700;font-size: 0.9em;">Logout</button>

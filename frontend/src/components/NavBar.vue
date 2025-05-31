@@ -9,12 +9,14 @@ import profile from '@/assets/profilew.svg';
 import history from '@/assets/historyw.svg';
 import data from '@/assets/dataw.svg';
 import airtime from '@/assets/airtimew.svg';
+import transfer from '@/assets/transferw.svg';
 
 import homeFilled from '@/assets/home.svg';
 import profileFilled from '@/assets/profile.svg';
 import dataFilled from '@/assets/data.svg';
 import airtimeFilled from '@/assets/airtime.svg';
 import historyfilled from '@/assets/history.svg';
+import transferFilled from '@/assets/transfer.svg';
 
 
 import { useRouter, useRoute } from 'vue-router';
@@ -24,6 +26,7 @@ const profileImgPath: Ref<string> = ref(profileFilled);
 const bellImgPath: Ref<string> = ref(historyfilled);
 const dataImgPath: Ref<string> = ref(dataFilled);
 const airtimeImgPath: Ref<string> = ref(airtimeFilled);
+const transferImgPath : Ref<string> = ref(transferFilled);
 
 const router = useRouter();
 const route = useRoute();
@@ -38,6 +41,7 @@ const selectNav = (name: string = route.name as string) => {
   bellImgPath.value = historyfilled;
   dataImgPath.value = dataFilled;
   profileImgPath.value = profileFilled;
+  transferImgPath.value = transferFilled;
 
   // Set selected icon to white
   switch (name) {
@@ -60,6 +64,10 @@ const selectNav = (name: string = route.name as string) => {
     case 'profile':
       profileImgPath.value = profile;
       router.push('/profile');
+      break;
+    case 'transfer':
+      transferImgPath.value = transfer;
+      router.push('/transfer');
       break;
   }
 };
@@ -106,6 +114,17 @@ watchEffect(() => {
           alt="Data"
         />
         <span>Buy Data</span>
+      </li>
+
+      <li class="nav-item" :class="{ selected: selectedNav === 'transfer' }" @mouseover="transferImgPath = transfer"
+          @mouseleave="transferImgPath = selectedNav === 'transfer' ? transfer : transferFilled"
+          @click="selectNav('transfer')">
+        <img
+          :src="transferImgPath"
+          class="nav-link"
+          alt=" transfer"
+        />
+        <span>Transfer</span>
       </li>
 
       <li class="nav-item" :class="{ selected: selectedNav === 'history' }" @mouseover="bellImgPath = history"

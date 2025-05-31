@@ -31,21 +31,21 @@ const selectedNetwork = ref(null);
                         <div>
                             <p class="mt-5" style="color: grey;text-align: left;font-size: 0.8em;font-weight: 600;">Select Network</p>
                             <div class="p-1" style="display: flex;justify-content: flex-start;gap: 10%;align-items: center;width: 100%;flex-direction: row;">
-                                <span style="cursor: pointer;transition: all 0.3s;" @click="selectedNetwork = selectedNetwork === 'mtn' ? null : 'mtn'" :style="{ border: selectedNetwork === 'mtn' ? '2px solid black' : 'none', borderRadius: '10px', padding: '5px' }">
+                                <span style="cursor: pointer;transition: all 0.3s;" @click="selectedNetwork = 'mtn'" :style="{ border: selectedNetwork === 'mtn' ? '2px solid black' : 'none', borderRadius: '10px', padding: '5px' }">
                                     <img :src="mtn" alt="VeeTop MTN Icon" style="width: 3em;height: 3em;border-radius: 50%;">
                                     <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">MTN</p>
                                 </span>
                                 
-                                <span style="cursor: pointer;">
+                                <span style="cursor: pointer;transition: all 0.3s;" @click="selectedNetwork = 'airtel'" :style="{ border: selectedNetwork === 'airtel' ? '2px solid black' : 'none', borderRadius: '10px', padding: '5px' }">
                                     <img :src="airtel" alt="VeeTop Airtel Icon" style="width: 3em;height: 3em;border-radius: 50%;">
                                     <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">Airtel</p>
                                 </span>
-                                    <span style="cursor: pointer;">
-                                    <img :src="glo" alt="VeeTop Glo Icon" style="width: 3em;height: 3em;border-radius: 50%;">
+                                    <span style="cursor: pointer;" @click="selectedNetwork = 'glo'" :style="{ border: selectedNetwork === 'glo' ? '2px solid black' : 'none', borderRadius: '10px', padding: '5px' }">
+                                    <img :src="glo" alt="VeeTop Glo Icon" style="width: 3em;height: 3em;border-radius: 50%;" >
                                     <p class="p-1" style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.5em">Glo</p>
                                 </span>
                                 
-                                <span style="cursor: pointer;">
+                                <span style="cursor: pointer;" @click="selectedNetwork = 'mobile'" :style="{ border: selectedNetwork === 'mobile' ? '2px solid black' : 'none', borderRadius: '10px', padding: '5px' }">
                                     <img :src="mobile" alt="VeeTop 9Mobile Icon" style="width: 3em;height: 3em;border-radius: 50%;">
                                     <p style="color: black;text-align: left;font-size: 0.8em;text-align: center;font-weight: 600;width: 3.7em">9mobile</p>
                                 </span>
