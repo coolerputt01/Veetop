@@ -38,7 +38,7 @@ watchEffect(() => {
         <div style="display: flex;justify-content: center;align-items: center;">
             <img :src="imgPath" alt="VeeTop History Card" style="width: 2.1em;height: 2.1em;background-color: lightgrey;border-radius: 50%;padding: 8px;margin: 5px;">
             <span style="line-height: 2px;">
-                <h4 style="font-size: 1.2em;font-weight: 600;margin-bottom: 7%;">{{ title }}</h4>
+                <h4 style="font-size: 1.1em;font-weight: 600;margin-bottom: 7%;">{{ title }}</h4>
                 <div style="display: flex;justify-content: flex-start;align-items: center;">
                     <p style="color: grey;font-size: 0.8em;text-align: left;">{{number}}</p> 
                     <div style="margin: 0.3%;width: 0.3em;height: 0.3em;">   </div>

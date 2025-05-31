@@ -48,11 +48,11 @@ onBeforeMount( async () => {
                 <div style="display: flex;justify-content: flex-start;align-items: center;width: 100%;">
                     <div class="grid p-4 mt-5" style="width: 80%;background-color: #000;border-radius: 12px;">
                         <span>
-                            <h1 style="font-size: 1.8em;text-align: left;font-weight: 500;">Account Balance</h1>
+                            <h1 style="font-size: 1.8em;text-align: left;font-weight: 500;color: #fff;">Account Balance</h1>
                             <p style="font-size: 0.9em;text-align: left;color: lightgrey;font-weight: 550;">Available for transactions</p>
                         </span>
                         <span style="display: flex;justify-content: flex-start;align-items: center;width: 100%;flex-direction: column;">
-                            <span style="font-weight: 700;font-size: 2.4em;width: 100%;">&#8358;500</span>
+                            <span style="font-weight: 700;font-size: 2.4em;width: 100%;color: #fff;">&#8358;500</span>
                             <div style="width: 100%;">
                                 <button class="p-2" style="background-color: #fff;border-radius: 50px;color: #000;font-size: 0.8em;font-weight: 550;transition: all 0.3s;outline: none;border: none;">Add Money</button>
                             </div>

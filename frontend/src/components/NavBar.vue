@@ -59,6 +59,7 @@ const selectNav = (name: string = route.name as string) => {
       break;
     case 'profile':
       profileImgPath.value = profile;
+      router.push('/profile');
       break;
   }
 };
