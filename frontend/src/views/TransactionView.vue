@@ -6,15 +6,17 @@ import airtimeFilled from '@/assets/airtime.svg';
 import dataFilled from '@/assets/data.svg';
 import transferFilled from '@/assets/transfer.svg';
 
-import TransactionCard from '@/components/TransactionCard.vue';
+import HistoryCard from '@/components/HistoryCard.vue';
 
 import airtime from '@/assets/airtimew.svg';
 import data from '@/assets/dataw.svg';
 import transfer from '@/assets/transferw.svg';
 
+const searchQuery: Ref<string> = ref('');
+
 const checkSize = computed(() => window.innerWidth > 850);
 
-const selectedRegex: Ref<string> = ref('');
+const selectedRegex: Ref<string> = ref('all');
 const airtimeImgPath: Ref<string> = ref(airtimeFilled);
 const dataImgPath: Ref<string> = ref(dataFilled);
 const transferImgPath: Ref<string> = ref(transferFilled);
@@ -38,6 +40,28 @@ const selectRegex = (name: string) => {
             break;
     }
 }
+
+const transactions = ref([
+  { title: 'Airtime Purchase', number: '08012345678', date: '5/19/2025', amount: -1000, successful: true, type: 'airtime' ,sim:'MTN'},
+  { title: 'Data Bundle (3GB for 30 days)', number: '08123456789', date: '5/20/2025', amount: -1500, successful: true, type: 'data',sim:'Airtel'},
+  { title: 'Transfer', number: '07098765432', date: '5/21/2025', amount: -5000, successful: true, type: 'transfer',sim:'MTN'},
+  { title: 'Airtime Purchase', number: '08099998888', date: '5/22/2025', amount: -700, successful: false, type: 'airtime',sim:'Glo' },
+  { title: 'Transfer', number: '07012345678', date: '5/22/2025', amount: -2500, successful: true, type: 'transfer',sim:'MTN'},
+]);
+
+const filteredTransactions = computed(() => {
+  return transactions.value.filter((transaction) => {
+    const matchesType = selectedRegex.value === 'all' || transaction.type === selectedRegex.value;
+    if(searchQuery.value.length != 0){
+        const matchesSearch =
+        transaction.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
+        transaction.number.includes(searchQuery.value);
+        return matchesType && matchesSearch;
+    }else {
+        return matchesType;
+    }
+  });
+});
 </script>
 
 <template>
@@ -73,19 +97,29 @@ const selectRegex = (name: string) => {
                                 </div>
                             </div>
                             <div>
-                                <input type="text" style="border: 1px solid grey;outline: none;border-radius: 10px;font-size: 0.9em;padding: 6px;" placeholder="&#128269; Search transactions">
+                                <input v-model="searchQuery" class="m-3" type="text" style="border: 1px solid grey;outline: none;border-radius: 10px;font-size: 0.9em;padding: 6px;" placeholder="&#128269; Search transactions">
                             </div>
                         </div>
                     </div>
                 </section>
                 <section class="mt-5" style="width: 100%;">
                     <ul class="list-group">
-                        <TransactionCard title="Airtime Purchase" number="08012345678" date="5/19/2025" :amount="-1000" :successful="true"/>
-                        <TransactionCard title="Airtime Purchase" number="08012345678" date="5/19/2025" :amount="-1000" :successful="true"/>
-                        <TransactionCard title="Airtime Purchase" number="08012345678" date="5/19/2025" :amount="-1000" :successful="true"/>
+                        <HistoryCard
+                        v-for="(tx, index) in filteredTransactions"
+                        :key="index"
+                        :title="tx.title"
+                        :number="tx.number"
+                        :date="tx.date"
+                        :amount="tx.amount"
+                        :successful="tx.successful"
+                        :sim="tx.sim"
+                        :job="tx.type"
+                        />
                         <li class="list-group-item p-3">
                             <div style="width: 100%;text-align: center;">
-                                <span href="#" style="color: grey;text-decoration: none;font-weight: 500;font-size: 0.9em;cursor: pointer;">Showing 8 of 8 transactions</span>
+                                <span href="#" style="color: grey;text-decoration: none;font-weight: 500;font-size: 0.9em;cursor: pointer;">
+                                    Showing {{ filteredTransactions.length }} of {{ transactions.length }} transactions
+                                </span>
                             </div>
                         </li>
                     </ul>
